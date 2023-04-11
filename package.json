@@ -9,7 +9,7 @@
     "lint-warnings": "node ./node_modules/eslint/bin/eslint.js  --quiet .",
     "lint-fix": "node ./node_modules/eslint/bin/eslint.js  --fix ."
   },
-  "author": "ovaldivia",
+  "author": "homie",
   "dependencies": {
     "axios": "^1.2.1",
     "cors": "^2.8.5",
