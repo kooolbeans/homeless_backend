@@ -24,7 +24,7 @@ This project uses Google Code Style for JS - [See here](https://google.github.io
 
 ## Endpoints
 
-### GET /homie/:id
+### GET /v1/api/homie/:id
 
-### POST /payment/:id
+### POST /v1/api/payment/:id
 
