@@ -1,18 +1,13 @@
 const express = require('express');
 const {MainController} = require('../controllers/index');
-// eslint-disable-next-line new-cap
 const router = express.Router();
 
-// test ROUTE
-router.get('/test', async (req, res)=>{
-  res.status(200).json({
-    message: ' Working...',
-  });
-});
-
-// eslint-disable-next-line max-len
+router.get('/homies', async (req, res)=> MainController.getAllAction(req, res) );
 router.get('/homie/:id', async (req, res)=> MainController.getAction(req, res) );
-// eslint-disable-next-line max-len
+router.post('/homie', async (req, res)=> MainController.createAction(req, res) );
+router.put('/homie/:id', async (req, res)=> MainController.updateAction(req, res) );
+router.delete('/homie/:id', async (req, res)=> MainController.deleteAction(req, res) );
+
 router.post('/payment/:id', async (req, res)=> PaymentController.payAction(req, res) );
 
 module.exports = router;

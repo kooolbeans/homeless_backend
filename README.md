@@ -1,8 +1,5 @@
 # Homeless Backend
 
-## Code style
-This project uses Google Code Style for JS - [See here](https://google.github.io/styleguide/jsguide.html) <br>Please make sure your commits follow this standard. <br> Use the linter commands below for help.
-
 ## Requirements
 - mongodb v. >= 4
 - nodejs v. >= 18
@@ -15,16 +12,16 @@ This project uses Google Code Style for JS - [See here](https://google.github.io
 ## Run server
 - npm start
 
-## Run command
-- `npm run lint-warnings` Shows all linter issues. Recommend to run this before pushing to branch.
-- `npm run lint-fix` Auto fix all linter issues.
-
 ## Run tests
 - npm run test
 
 ## Endpoints
 
-### GET /v1/api/homie/:id
+### GET /v1/api/homies Retrives all
+### GET /v1/api/homie/:id Retrive by id
+### POST /v1/api/homie Insert Profile
+### PUT /v1/api/homie/:id Update Profile
+### DELETE /v1/api/homie/:id Delete by id
 
 ### POST /v1/api/payment/:id
 
