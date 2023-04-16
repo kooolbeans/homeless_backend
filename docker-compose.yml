@@ -1,0 +1,38 @@
+version: "3.4"
+services:
+  backend:
+    image: homeless-backend
+    container_name: homeless-backend
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - DB_HOST=homeless-mongodb
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_NAME=$DB_DATABASE
+      - DB_PORT=$DB_PORT
+    networks:
+      - homeless-network
+
+  mongodb:
+    image: mongo:5.0.2
+    container_name: homeless-mongodb
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$DB_PASSWORD
+    ports:
+      - 27017:27017
+    volumes:
+      - ./db:/data/db
+
+networks:
+  homeless-network:
+    external: true
