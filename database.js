@@ -5,10 +5,18 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', true);
 
 let DB;
+console.log();
 
 const getDatabase = () => {
-  const { DB_URI, DB_USER, DB_PASSWORD, DB_PORT, DB_DATABASE } = process.env;
-  connection = DB_URI || `mongodb://${DB_USER}:${DB_PASSWORD}@127.0.0.1:${DB_PORT}/${DB_DATABASE}`;
+  const { DB_URI, DB_NAME, DB_PASSWORD, DB_PORT } = process.env;
+
+  const uri = (
+    DB_URI.match(/DB_/g).length
+      ? `mongodb://${DB_NAME}:${DB_PASSWORD}@127.0.0.1:${DB_PORT}/admin` // Local
+      : DB_URI // Docker
+  );
+
+  connection = uri;
 
   if (!DB) {
     DB = mongoose.connect(connection);

@@ -15,5 +15,6 @@ module.exports = {
     'object-curly-spacing': 0,
     'indent': 0,
     'new-cap': 0,
+    'operator-linebreak': 0,
   },
 };
