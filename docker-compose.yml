@@ -15,17 +15,18 @@ services:
       - DB_HOST=homeless-mongodb
       - DB_USER=$DB_USER
       - DB_PASSWORD=$DB_PASSWORD
-      - DB_NAME=$DB_DATABASE
+      - DB_NAME=$DB_NAME
       - DB_PORT=$DB_PORT
-      - DB_URI=mongodb://${DB_USER}:${DB_PASSWORD}@mongodb:${DB_PORT}/${DB_DATABASE}
+      - DB_URI=$DB_URI
     networks:
-      - homeless-network
+    - homeless-network
     env_file:
       - .env
 
   mongodb:
     image: mongo:5.0.2
     container_name: homeless-mongodb
+    command: ["--bind_ip_all"]
     restart: unless-stopped
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$DB_USER
@@ -34,8 +35,10 @@ services:
       - 27017:27017
     volumes:
       - mongodb_data_container:/data/db
+      - ./entrypoint.js/:/docker-entrypoint-initdb.d/entrypoint.js
     networks:
       - homeless-network
+      - homeless-bridge
     env_file:
       - .env
 
@@ -43,13 +46,11 @@ services:
     build: ./seeds
     depends_on:
       - mongodb
+    networks:
+      - homeless-network
+      - homeless-bridge
     environment:
-      - DB_USER=$DB_USER
-      - DB_PASSWORD=$DB_PASSWORD
-      - DB_NAME=$DB_DATABASE
-      - DB_URI=mongodb://${DB_USER}:${DB_PASSWORD}@mongodb:${DB_PORT}/${DB_DATABASE}
-    env_file:
-      - .env
+      - DB_URI=$DB_URI
 
 volumes:
   mongodb_data_container:
@@ -57,3 +58,6 @@ volumes:
 networks:
   homeless-network:
     external: true
+  homeless-bridge:
+    name: homeless-bridge
+    driver: bridge
