@@ -4,7 +4,7 @@ ENV PORT=4000
 
 WORKDIR /var/app/homeless
 
-COPY . /
+ADD . /
 
 RUN npm install
 

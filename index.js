@@ -1,21 +1,20 @@
-require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
-const mongoose = require('mongoose');
-const mongoString = process.env.DATABASE_URL;
+const getDatabase = require('./database');
+
 const port = process.env.PORT;
 
-mongoose.set('strictQuery', true);
-mongoose.connect(mongoString);
-const database = mongoose.connection;
+getDatabase()
+  .then((database) => {
+    database.connection.on('error', (error) => {
+      console.log(error);
+    });
 
-database.on('error', (error) => {
-  console.log(error);
-});
+    database.connection.once('connected', () => {
+      console.log('Database Connected');
+    });
+  });
 
-database.once('connected', () => {
-  console.log('Database Connected');
-});
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -24,7 +23,8 @@ const routes = require('./routes/index');
 
 app.use('/v1/api', routes);
 
-const server = app.listen(port, () => {
+const server = app.listen(port, '0.0.0.0', () => {
   console.log(`Homeless API Started at ${port}`);
 });
-module.exports = server;
+
+module.exports = server

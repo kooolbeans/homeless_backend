@@ -6,8 +6,6 @@
   "scripts": {
     "start": "nodemon index.js",
     "test": "node ./node_modules/jasmine/bin/jasmine.js",
-    "up": "docker-compose up",
-    "down": "docker-compose down",
     "lint-warnings": "node ./node_modules/eslint/bin/eslint.js  --quiet .",
     "lint-fix": "node ./node_modules/eslint/bin/eslint.js  --fix ."
   },

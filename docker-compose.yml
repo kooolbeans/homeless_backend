@@ -17,21 +17,42 @@ services:
       - DB_PASSWORD=$DB_PASSWORD
       - DB_NAME=$DB_DATABASE
       - DB_PORT=$DB_PORT
+      - DB_URI=mongodb://${DB_USER}:${DB_PASSWORD}@mongodb:${DB_PORT}/${DB_DATABASE}
     networks:
       - homeless-network
+    env_file:
+      - .env
 
   mongodb:
     image: mongo:5.0.2
     container_name: homeless-mongodb
     restart: unless-stopped
-    env_file: ./.env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$DB_USER
       - MONGO_INITDB_ROOT_PASSWORD=$DB_PASSWORD
     ports:
       - 27017:27017
     volumes:
-      - ./db:/data/db
+      - mongodb_data_container:/data/db
+    networks:
+      - homeless-network
+    env_file:
+      - .env
+
+  mongo-seed:
+    build: ./seeds
+    depends_on:
+      - mongodb
+    environment:
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_NAME=$DB_DATABASE
+      - DB_URI=mongodb://${DB_USER}:${DB_PASSWORD}@mongodb:${DB_PORT}/${DB_DATABASE}
+    env_file:
+      - .env
+
+volumes:
+  mongodb_data_container:
 
 networks:
   homeless-network:
