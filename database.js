@@ -11,7 +11,7 @@ const getDatabase = () => {
   const { DB_URI, DB_NAME, DB_PASSWORD, DB_PORT } = process.env;
 
   const uri = (
-    DB_URI.match(/DB_/g).length
+    (DB_URI.match(/DB_/g) || []).length
       ? `mongodb://${DB_NAME}:${DB_PASSWORD}@127.0.0.1:${DB_PORT}/admin` // Local
       : DB_URI // Docker
   );
