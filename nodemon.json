@@ -1,0 +1,7 @@
+{
+  "ignore": ["db/*"],
+  "delay": 2,
+  "scripts": {
+    "start": "nodemon"
+  }
+}
